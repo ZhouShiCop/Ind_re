@@ -1,23 +1,26 @@
-[gd_scene format=3 uid="uid://c3tk0vwyi7y2a"]
+[gd_scene format=4 uid="uid://c3tk0vwyi7y2a"]
 
 [ext_resource type="TileSet" uid="uid://dnfg1b00hgb7a" path="res://Res/Tile_set.tres" id="1_py34j"]
 [ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
 [ext_resource type="Script" uid="uid://cjmxdhabumvxq" path="res://Script/Component/tile_map_layer.gd" id="2_py34j"]
 [ext_resource type="Script" uid="uid://cm72ncl2bm8r7" path="res://Secen/visual_tile.gd" id="3_rpex6"]
-[ext_resource type="Texture2D" uid="uid://d0ra04gtbshfc" path="res://Texture/Tilemap/border3.png" id="4_a2vgu"]
 [ext_resource type="Texture2D" uid="uid://clf7eex8vkruv" path="res://Texture/Tilemap/1.png" id="4_f5d8p"]
+[ext_resource type="StyleBox" uid="uid://d8vo61ocec8k" path="res://Res/new_style_box_flat.tres" id="4_ox3cs"]
 [ext_resource type="Texture2D" uid="uid://cigyhd4c56alv" path="res://Texture/Tilemap/Build.png" id="4_vtky6"]
 [ext_resource type="Texture2D" uid="uid://cw0i2um2f76yd" path="res://Texture/Tilemap/2.png" id="5_vtky6"]
 [ext_resource type="Texture2D" uid="uid://ckx0s4qpvn0ne" path="res://Texture/Tilemap/3.png" id="6_716w2"]
+[ext_resource type="LabelSettings" uid="uid://cog0qvmukx8v2" path="res://Res/label_font.tres" id="6_ox3cs"]
 [ext_resource type="Texture2D" uid="uid://voqvh2pgome4" path="res://Texture/Tilemap/4.png" id="7_rpex6"]
 [ext_resource type="Texture2D" uid="uid://bsckp4xcsjud4" path="res://Texture/Tilemap/5.png" id="8_a2vgu"]
 [ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/texture_button.gd" id="9_vtky6"]
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
+[ext_resource type="Texture2D" uid="uid://ci1bopc2j1yoi" path="res://Texture/Tilemap/border2.png" id="13_a2vgu"]
 
 [node name="Root" type="Node2D" unique_id=1840476908]
 script = ExtResource("2_py34j")
 
 [node name="tiles" type="TileMapLayer" parent="." unique_id=1490634842]
+tile_map_data = PackedByteArray("AAABAAEAAQABAAAAAAACAAEAAQABAAAAAAAAAAEAAQABAAAAAAABAAAAAQABAAAAAAD//wEAAQACAAIAAAAAAAAAAQABAAAAAAD//wAAAQACAAIAAAAAAP//AQABAAIAAAABAP//AQABAAIAAAACAAAAAQABAAAAAAACAP//AQABAAIAAAADAAAAAQAAAAIAAAADAAEAAQAAAAIAAAACAAIAAQAEAAEAAAABAAIAAQAEAAEAAAAAAAIAAQAEAAEAAAA=")
 tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 
@@ -27,19 +30,43 @@ tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 script = ExtResource("3_rpex6")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="vf" unique_id=879814083]
+[node name="PanelContainer" type="PanelContainer" parent="vf" unique_id=1158343748]
+modulate = Color(1, 1, 1, 0.5176471)
 top_level = true
-offset_left = 124.0
-offset_top = -62.0
-offset_right = 1240.0
-offset_bottom = 682.0
-texture = ExtResource("4_a2vgu")
+offset_right = 248.0
+offset_bottom = 186.0
+theme_override_styles/panel = ExtResource("4_ox3cs")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="vf/PanelContainer" unique_id=879814083]
+layout_mode = 2
+texture = ExtResource("13_a2vgu")
 draw_center = false
-region_rect = Rect2(0, 0, 128, 128)
-patch_margin_left = 32
-patch_margin_top = 32
-patch_margin_right = 32
-patch_margin_bottom = 32
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="vf/PanelContainer" unique_id=1458052689]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="vf/PanelContainer/VBoxContainer" unique_id=66851354]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1*1"
+label_settings = ExtResource("6_ox3cs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="vf/PanelContainer/VBoxContainer" unique_id=687722486]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1*1"
+label_settings = ExtResource("6_ox3cs")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628964581]
 position = Vector2(802, 453)

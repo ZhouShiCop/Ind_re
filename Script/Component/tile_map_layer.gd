@@ -23,6 +23,7 @@ var _last_tile_pos: Vector2i           ## 上一帧瓦片坐标
 var _current_tile_pos: Vector2i        ## 当前瓦片坐标
 var _foucs_button : Fouc_Button
 @onready var _tile_map_layer: TileMapLayer = $tiles
+@onready var vf: TileMapLayer = $vf
 
 # ============================================================
 # 生命周期函数
@@ -49,8 +50,12 @@ func _handle_mouse_button(event: InputEventMouseButton) -> void:
 	
 	if event.pressed:
 		_is_building = true
+		vf.Is_Press_Middle = true
+		_current_tile_pos = _tile_map_layer.local_to_map(get_global_mouse_position())
+		vf.Start_coord = _current_tile_pos
 	elif event.is_released():
 		_is_building = false
+		vf.Is_Press_Middle = false
 		# 重置位置，避免下次点击出现错误的补偿直线
 		_last_tile_pos = Vector2i.ZERO
 		_current_tile_pos = Vector2i.ZERO
@@ -62,6 +67,7 @@ func _handle_mouse_button(event: InputEventMouseButton) -> void:
 func _draw_tiles() -> void:
 	var mouse_pos := get_global_mouse_position()
 	_current_tile_pos = _tile_map_layer.local_to_map(mouse_pos)
+	vf.End_coord = _current_tile_pos
 	
 	# 初始状态：直接处理当前位置
 	if _last_tile_pos == Vector2i.ZERO:
