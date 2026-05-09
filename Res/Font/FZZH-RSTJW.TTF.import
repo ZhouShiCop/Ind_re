@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cyl1g5posp0o7"
-path="res://.godot/imported/FZZH-RSTJW.TTF-7e657e1c33b8060ecfe2dc7102782d65.fontdata"
+path="res://.godot/imported/FZZH-RSTJW.TTF-66f43c3b22792c08d24b9565575861a0.fontdata"
 
 [deps]
 
-source_file="res://Res/FZZH-RSTJW.TTF"
-dest_files=["res://.godot/imported/FZZH-RSTJW.TTF-7e657e1c33b8060ecfe2dc7102782d65.fontdata"]
+source_file="res://Res/Font/FZZH-RSTJW.TTF"
+dest_files=["res://.godot/imported/FZZH-RSTJW.TTF-66f43c3b22792c08d24b9565575861a0.fontdata"]
 
 [params]
 

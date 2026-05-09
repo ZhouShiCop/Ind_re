@@ -13,7 +13,7 @@ config_version=5
 config/name="Ind_T"
 run/main_scene="uid://ctok1taqdwj7o"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://Texture/icon.svg"
+config/icon="res://Texture/SVG/icon.svg"
 
 [display]
 

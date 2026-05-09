@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dormpkkexvrri"
-path="res://.godot/imported/FZZH-RanHJW.TTF-cc6c63b2392d82a272a7fac1827f4435.fontdata"
+path="res://.godot/imported/FZZH-RanHJW.TTF-e93c9f1d86867f4c70f1e69f9094ac76.fontdata"
 
 [deps]
 
-source_file="res://Res/FZZH-RanHJW.TTF"
-dest_files=["res://.godot/imported/FZZH-RanHJW.TTF-cc6c63b2392d82a272a7fac1827f4435.fontdata"]
+source_file="res://Res/Font/FZZH-RanHJW.TTF"
+dest_files=["res://.godot/imported/FZZH-RanHJW.TTF-e93c9f1d86867f4c70f1e69f9094ac76.fontdata"]
 
 [params]
 
