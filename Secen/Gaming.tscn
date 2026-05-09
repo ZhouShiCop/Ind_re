@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
 [ext_resource type="Script" uid="uid://cjmxdhabumvxq" path="res://Script/Component/tile_map_layer.gd" id="2_py34j"]
 [ext_resource type="Script" uid="uid://cm72ncl2bm8r7" path="res://Secen/visual_tile.gd" id="3_rpex6"]
+[ext_resource type="Texture2D" uid="uid://d0ra04gtbshfc" path="res://Texture/Tilemap/border3.png" id="4_a2vgu"]
 [ext_resource type="Texture2D" uid="uid://clf7eex8vkruv" path="res://Texture/Tilemap/1.png" id="4_f5d8p"]
 [ext_resource type="Texture2D" uid="uid://cigyhd4c56alv" path="res://Texture/Tilemap/Build.png" id="4_vtky6"]
 [ext_resource type="Texture2D" uid="uid://cw0i2um2f76yd" path="res://Texture/Tilemap/2.png" id="5_vtky6"]
@@ -12,16 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://bsckp4xcsjud4" path="res://Texture/Tilemap/5.png" id="8_a2vgu"]
 [ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/texture_button.gd" id="9_vtky6"]
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
-[ext_resource type="Texture2D" uid="uid://ci1bopc2j1yoi" path="res://Texture/Tilemap/border2.png" id="13_a2vgu"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rpex6"]
-atlas = ExtResource("13_a2vgu")
 
 [node name="Root" type="Node2D" unique_id=1840476908]
 script = ExtResource("2_py34j")
 
 [node name="tiles" type="TileMapLayer" parent="." unique_id=1490634842]
-visible = false
 tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 
@@ -30,6 +26,20 @@ modulate = Color(1, 1, 1, 0.27058825)
 tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 script = ExtResource("3_rpex6")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="vf" unique_id=879814083]
+top_level = true
+offset_left = 124.0
+offset_top = -62.0
+offset_right = 1240.0
+offset_bottom = 682.0
+texture = ExtResource("4_a2vgu")
+draw_center = false
+region_rect = Rect2(0, 0, 128, 128)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628964581]
 position = Vector2(802, 453)
@@ -132,11 +142,3 @@ offset_right = 784.0
 offset_bottom = 70.0
 texture = ExtResource("10_716w2")
 stretch_mode = 5
-
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer" unique_id=879814083]
-offset_right = 992.0
-offset_bottom = 186.0
-texture = SubResource("AtlasTexture_rpex6")
-region_rect = Rect2(16, 16, 32, 32)
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 2

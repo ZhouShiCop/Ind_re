@@ -22,7 +22,7 @@ var _is_building: bool = false         ## 是否正在绘制
 var _last_tile_pos: Vector2i           ## 上一帧瓦片坐标
 var _current_tile_pos: Vector2i        ## 当前瓦片坐标
 var _foucs_button : Fouc_Button
-@onready var _tile_map_layer: TileMapLayer = $TileMapLayer
+@onready var _tile_map_layer: TileMapLayer = $tiles
 
 # ============================================================
 # 生命周期函数
