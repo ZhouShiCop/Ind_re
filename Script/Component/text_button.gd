@@ -1,18 +1,34 @@
 extends TextureButton
-@export var Gaming: PackedScene
-const GAMING = preload("uid://c3tk0vwyi7y2a")
+## 通用按钮控制器
+## 处理按钮点击并触发对应场景切换
 
+# ============================================================
+# 导出变量（编辑器可调整）
+# ============================================================
+@export var gaming_scene: PackedScene  ## 游戏场景引用
 
-# Called when the node enters the scene tree for the first time.
+# ============================================================
+# 常量
+# ============================================================
+const GAMING_SCENE_UID := "uid://c3tk0vwyi7y2a"
+
+# ============================================================
+# 生命周期函数
+# ============================================================
 func _ready() -> void:
-	pass # Replace with function body.
+	# 如果未设置场景，尝试预加载
+	if gaming_scene == null:
+		gaming_scene = load(GAMING_SCENE_UID)
 
-func BePress() -> void:
-	print(name+" Be Pressed")
-	if(name == "Start"):
-		get_tree().change_scene_to_packed(GAMING)
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# ============================================================
+# 信号处理
+# ============================================================
+## 按钮被按下时调用（由动画或信号触发）
+func be_pressed() -> void:
+	print("[%s] 按钮被按下" % name)
+	
+	match name:
+		"Start":
+			if gaming_scene:
+				get_tree().change_scene_to_packed(gaming_scene)
+			print("[%s] 未定义的按钮行为" % name)
