@@ -21,6 +21,7 @@ const TERRAIN_ID_DISABLED: int = -1
 var _is_building: bool = false         ## 是否正在绘制
 var _last_tile_pos: Vector2i           ## 上一帧瓦片坐标
 var _current_tile_pos: Vector2i        ## 当前瓦片坐标
+var _foucs_button : Fouc_Button
 @onready var _tile_map_layer: TileMapLayer = $TileMapLayer
 
 # ============================================================
@@ -173,7 +174,7 @@ func _get_line_points(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 # 公共接口
 # ============================================================
 ## 按钮按下回调
-func button_press(button_name: String) -> void:
+func button_press(button_name: String,node:Fouc_Button) -> void:
 	match button_name:
 		"Build_Button":
 			# 切换建造模式，关闭删除模式
@@ -191,6 +192,10 @@ func button_press(button_name: String) -> void:
 		
 		_:
 			print("未知的按钮: ", button_name)
+	if _foucs_button:
+		_foucs_button.Is_Pressed = false	
+	node.Is_Pressed = true
+	_foucs_button = node
 
 
 ## 打印当前模式
@@ -225,3 +230,16 @@ func print_all_terrains() -> void:
 		for terrain_idx in range(terrain_count):
 			var terrain_name := tile_set.get_terrain_name(set_idx, terrain_idx)
 			print("  - 地形: [%d] %s" % [terrain_idx, terrain_name])
+
+@onready var buttons: Array = [] # Store all button nodes
+
+func _ready() -> void:
+	# Initialize buttons array with all TextureButton nodes
+	buttons = get_tree().get_nodes_in_group("buttons")
+
+func set_button_pressed(target_button: TextureButton) -> void:
+	for button in buttons:
+		if button == target_button:
+			button.Is_Pressed = true
+		else:
+			button.Is_Pressed = false
