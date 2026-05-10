@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://c3tk0vwyi7y2a"]
+[gd_scene format=3 uid="uid://c3tk0vwyi7y2a"]
 
 [ext_resource type="TileSet" uid="uid://dnfg1b00hgb7a" path="res://Res/Source/Tile_set.tres" id="1_py34j"]
 [ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
@@ -16,11 +16,14 @@
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
 [ext_resource type="Texture2D" uid="uid://ci1bopc2j1yoi" path="res://Texture/Tilemap/border2.png" id="13_a2vgu"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox3cs"]
+atlas = ExtResource("4_vtky6")
+region = Rect2(128, 0, 64, 64)
+
 [node name="Root" type="Node2D" unique_id=1840476908]
 script = ExtResource("2_py34j")
 
 [node name="tiles" type="TileMapLayer" parent="." unique_id=1490634842]
-tile_map_data = PackedByteArray("AAABAAEAAQABAAAAAAACAAEAAQABAAAAAAAAAAEAAQABAAAAAAABAAAAAQABAAAAAAD//wEAAQACAAIAAAAAAAAAAQABAAAAAAD//wAAAQACAAIAAAAAAP//AQABAAIAAAABAP//AQABAAIAAAACAAAAAQABAAAAAAACAP//AQABAAIAAAADAAAAAQAAAAIAAAADAAEAAQAAAAIAAAACAAIAAQAEAAEAAAABAAIAAQAEAAEAAAAAAAIAAQAEAAEAAAA=")
 tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 
@@ -30,15 +33,10 @@ tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 script = ExtResource("3_rpex6")
 
-[node name="PanelContainer" type="PanelContainer" parent="vf" unique_id=1158343748]
-modulate = Color(1, 1, 1, 0.5176471)
+[node name="NinePatchRect" type="NinePatchRect" parent="vf" unique_id=879814083]
 top_level = true
-offset_right = 248.0
-offset_bottom = 186.0
-theme_override_styles/panel = ExtResource("4_ox3cs")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="vf/PanelContainer" unique_id=879814083]
-layout_mode = 2
+offset_right = 124.0
+offset_bottom = 124.0
 texture = ExtResource("13_a2vgu")
 draw_center = false
 region_rect = Rect2(0, 0, 64, 64)
@@ -47,6 +45,15 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
+[node name="PanelContainer" type="PanelContainer" parent="vf" unique_id=1158343748]
+modulate = Color(1, 1, 1, 0.5176471)
+top_level = true
+clip_contents = true
+layout_direction = 1
+offset_right = 124.0
+offset_bottom = 124.0
+theme_override_styles/panel = ExtResource("4_ox3cs")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="vf/PanelContainer" unique_id=1458052689]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -54,22 +61,20 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="vf/PanelContainer/VBoxContainer" unique_id=66851354]
 layout_mode = 2
-size_flags_vertical = 3
-text = "1*1"
+text = "1"
 label_settings = ExtResource("6_ox3cs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="vf/PanelContainer/VBoxContainer" unique_id=687722486]
 layout_mode = 2
-size_flags_vertical = 3
 text = "1*1"
 label_settings = ExtResource("6_ox3cs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628964581]
-position = Vector2(802, 453)
+position = Vector2(960, 541)
 script = ExtResource("2_h18co")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1005233073]
@@ -79,6 +84,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -61.0
+offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -89,7 +96,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -94.0
+offset_top = -88.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
@@ -119,25 +126,31 @@ theme_override_constants/margin_bottom = 2
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=159497699 groups=["Opreator"]]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 3
-texture_normal = ExtResource("4_vtky6")
-texture_pressed = ExtResource("5_vtky6")
+texture_normal = SubResource("AtlasTexture_ox3cs")
+texture_pressed = ExtResource("13_a2vgu")
 texture_hover = ExtResource("6_716w2")
 texture_disabled = ExtResource("7_rpex6")
 texture_focused = ExtResource("8_a2vgu")
-ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 0
 script = ExtResource("9_vtky6")
 Name = "Build_Button"
 
 [node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/TextureButton" unique_id=984976828]
 visible = false
-layout_mode = 0
-offset_right = 784.0
-offset_bottom = 70.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("10_716w2")
-stretch_mode = 5
+stretch_mode = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1606756628]
 layout_mode = 2
@@ -150,6 +163,8 @@ theme_override_constants/margin_bottom = 2
 [node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=1763798051 groups=["Opreator"]]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 3
 texture_normal = ExtResource("4_f5d8p")
@@ -157,15 +172,17 @@ texture_pressed = ExtResource("5_vtky6")
 texture_hover = ExtResource("6_716w2")
 texture_disabled = ExtResource("7_rpex6")
 texture_focused = ExtResource("8_a2vgu")
-ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 0
 script = ExtResource("9_vtky6")
 Name = "Destroy"
 
 [node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/TextureButton2" unique_id=1630994203]
 visible = false
-layout_mode = 0
-offset_right = 784.0
-offset_bottom = 70.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("10_716w2")
-stretch_mode = 5
+stretch_mode = 3

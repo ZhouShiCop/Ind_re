@@ -53,6 +53,7 @@ func _handle_mouse_button(event: InputEventMouseButton) -> void:
 		vf.Is_Press_Middle = true
 		_current_tile_pos = _tile_map_layer.local_to_map(get_global_mouse_position())
 		vf.Start_coord = _current_tile_pos
+		vf.End_coord = _current_tile_pos
 	elif event.is_released():
 		_is_building = false
 		vf.Is_Press_Middle = false

@@ -3,6 +3,7 @@ class_name Vf_TileMap
 
 # 注意：确保场景树中 NinePatchRect 是 TileMapLayer 的直接子节点
 @onready var panel_container: PanelContainer = $PanelContainer
+@onready var nine_patch_rect: NinePatchRect = $NinePatchRect
 @onready var label: Label = $PanelContainer/VBoxContainer/Label
 @onready var label_2: Label = $PanelContainer/VBoxContainer/Label2
 @onready var camera_2d: Camera2D = $"../Camera2D"
@@ -22,6 +23,7 @@ class_name Vf_TileMap
 		# 控制 NinePatchRect 的显隐
 		if panel_container:
 			panel_container.visible = v
+			nine_patch_rect.visible = v
 	get():
 		# 读取时重置逻辑（根据你的需求保留）
 		clear_draw()
@@ -42,6 +44,7 @@ class_name Vf_TileMap
 func _ready() -> void:
 	if panel_container:
 		panel_container.visible = false
+		nine_patch_rect.visible = false
 
 # --- 核心逻辑 ---
 
@@ -71,11 +74,19 @@ func update_selection_ui():
 
 	# --- 赋值 ---
 	panel_container.position = rect_pos
+	nine_patch_rect.position = rect_pos
 	panel_container.size = rect_size
+	nine_patch_rect.size = rect_size
+	
 
 	# 更新文本内容
-	if label:
-		label.text = "%d * %d" % [count_x, count_y]
+	if label and (count_x>=2 and count_y>=2):
+		label.text = "%d*%d" % [count_x, count_y]
+		label.visible = true	
+	else :	
+		label.visible = false
+		label.text = ""
+	
 	if label_2:
 		label_2.text = "%d" % (count_x * count_y)
 
@@ -91,10 +102,13 @@ func update_selection_ui():
 			# 公式：基础大小 / 缩放值
 			# 例如：缩放 0.5 (缩小) -> 16 / 0.5 = 32 (字体变大)
 			# 例如：缩放 2.0 (放大) -> 16 / 2.0 = 8 (字体变小)
-			var new_font_size = 48.0 / cam_zoom
+			var size_Mult = count_x if count_x>20 else 20
+			cam_zoom = cam_zoom if cam_zoom>0.5 else 0.5
+			var new_font_size = size_Mult*4 / (cam_zoom*1.5)
 			
 			# 应用到 Label
 			label.label_settings.font_size=new_font_size
+			label.label_settings.outline_size = new_font_size*0.05
 			#label_2.label_settings.font_size=new_font_size
 		
 # 清除选框状态
