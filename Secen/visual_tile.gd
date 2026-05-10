@@ -7,6 +7,7 @@ class_name Vf_TileMap
 @onready var label: Label = $PanelContainer/VBoxContainer/Label
 @onready var label_2: Label = $PanelContainer/VBoxContainer/Label2
 @onready var camera_2d: Camera2D = $"../Camera2D"
+@onready var arrow: Control = $Arrow
 
 # --- 导出变量 ---
 
@@ -17,9 +18,9 @@ class_name Vf_TileMap
 	get():
 		return Is_Active
 
-@export var Is_Press_Middle : bool:
+@export var Is_Active_Border : bool:
 	set(v):
-		Is_Press_Middle = v
+		Is_Active_Border = v
 		# 控制 NinePatchRect 的显隐
 		if panel_container:
 			panel_container.visible = v
@@ -27,7 +28,14 @@ class_name Vf_TileMap
 	get():
 		# 读取时重置逻辑（根据你的需求保留）
 		clear_draw()
-		return Is_Press_Middle
+		return Is_Active_Border
+		
+@export var Is_Active_Arrow : bool:
+	set(v):
+		Is_Active_Arrow = v
+		arrow.visible = v
+	get():
+		return Is_Active_Arrow
 
 @export var Start_coord : Vector2i:
 	set(v):
@@ -39,12 +47,14 @@ class_name Vf_TileMap
 		End_coord = v
 		update_selection_ui() # 坐标改变时立即更新 UI
 
+@export var current_coord : Vector2i
 # --- 生命周期 ---
 
 func _ready() -> void:
 	if panel_container:
 		panel_container.visible = false
 		nine_patch_rect.visible = false
+	Is_Active_Arrow = true
 
 # --- 核心逻辑 ---
 
@@ -120,4 +130,7 @@ func clear_draw() -> void:
 	# if nine_patch_rect: nine_patch_rect.visible = false
 
 func _process(_delta: float) -> void:
+	if local_to_map(get_global_mouse_position())!=current_coord:
+		current_coord = local_to_map(get_global_mouse_position())
+		arrow.position = current_coord*62
 	pass
