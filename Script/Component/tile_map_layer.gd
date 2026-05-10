@@ -50,13 +50,13 @@ func _handle_mouse_button(event: InputEventMouseButton) -> void:
 	
 	if event.pressed:
 		_is_building = true
-		vf.Is_Press_Middle = true
+		vf.Is_Active_Border = true
 		_current_tile_pos = _tile_map_layer.local_to_map(get_global_mouse_position())
 		vf.Start_coord = _current_tile_pos
 		vf.End_coord = _current_tile_pos
 	elif event.is_released():
 		_is_building = false
-		vf.Is_Press_Middle = false
+		vf.Is_Active_Border = false
 		# 重置位置，避免下次点击出现错误的补偿直线
 		_last_tile_pos = Vector2i.ZERO
 		_current_tile_pos = Vector2i.ZERO

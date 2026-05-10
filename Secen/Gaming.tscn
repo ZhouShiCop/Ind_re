@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c3tk0vwyi7y2a"]
+[gd_scene format=4 uid="uid://c3tk0vwyi7y2a"]
 
 [ext_resource type="TileSet" uid="uid://dnfg1b00hgb7a" path="res://Res/Source/Tile_set.tres" id="1_py34j"]
 [ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ckx0s4qpvn0ne" path="res://Texture/Tilemap/3.png" id="6_716w2"]
 [ext_resource type="LabelSettings" uid="uid://cog0qvmukx8v2" path="res://Res/Theme/label_font.tres" id="6_ox3cs"]
 [ext_resource type="Texture2D" uid="uid://voqvh2pgome4" path="res://Texture/Tilemap/4.png" id="7_rpex6"]
+[ext_resource type="Texture2D" uid="uid://cjvi8xlf6vdjd" path="res://Texture/Tilemap/visual_grid.png" id="7_tg6yf"]
 [ext_resource type="Texture2D" uid="uid://bsckp4xcsjud4" path="res://Texture/Tilemap/5.png" id="8_a2vgu"]
 [ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/texture_button.gd" id="9_vtky6"]
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
@@ -24,6 +25,7 @@ region = Rect2(128, 0, 64, 64)
 script = ExtResource("2_py34j")
 
 [node name="tiles" type="TileMapLayer" parent="." unique_id=1490634842]
+tile_map_data = PackedByteArray("AAAEAAEAAQABAAAAAAAFAAEAAQABAAAAAAAEAAIAAQABAAAAAAADAAEAAQABAAAAAAAEAAAAAQABAAIAAAADAAIAAQABAAAAAAADAAAAAQABAAIAAAACAAEAAQACAAIAAAACAAIAAQACAAIAAAADAAMAAQABAAAAAAAEAAMAAQABAAAAAAACAAMAAQACAAIAAAADAAQAAQABAAAAAAAEAAQAAQABAAAAAAACAAQAAQACAAIAAAADAAUAAQABAAAAAAAEAAUAAQABAAAAAAACAAUAAQACAAIAAAADAAYAAQAEAAEAAAAEAAYAAQAEAAEAAAAFAAUAAQABAAAAAAAFAAYAAQAEAAEAAAAFAAQAAQABAAAAAAAGAAUAAQABAAAAAAAGAAQAAQABAAAAAAAHAAQAAQABAAAAAAAGAAMAAQABAAAAAAAHAAUAAQABAAAAAAAHAAMAAQABAAAAAAAIAAQAAQABAAAAAAAIAAMAAQABAAAAAAAHAAIAAQABAAAAAAAGAAIAAQABAAAAAAAIAAIAAQABAAAAAAAHAAEAAQABAAAAAAAGAAEAAQABAAAAAAAIAAEAAQABAAAAAAAHAAAAAQABAAIAAAAGAAAAAQABAAIAAAAFAAIAAQABAAAAAAAFAAAAAQABAAIAAAAFAAMAAQABAAAAAAAGAAYAAQAEAAEAAAAHAAYAAQAEAAEAAAAIAAUAAQABAAAAAAAJAAUAAQAAAAIAAAAIAAYAAQAEAAEAAAAJAAQAAQAAAAIAAAAJAAMAAQAAAAIAAAAJAAIAAQAAAAIAAAAJAAEAAQAAAAIAAAAIAAAAAQABAAIAAAA=")
 tile_set = ExtResource("1_py34j")
 navigation_enabled = false
 
@@ -73,6 +75,20 @@ label_settings = ExtResource("6_ox3cs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Arrow" type="Control" parent="vf" unique_id=1243159434]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 62.0
+offset_bottom = 62.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="vf/Arrow" unique_id=1424982467]
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 62.0
+texture = ExtResource("7_tg6yf")
+expand_mode = 1
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628964581]
 position = Vector2(960, 541)
 script = ExtResource("2_h18co")
@@ -84,8 +100,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -61.0
-offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -96,7 +110,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -88.0
+offset_top = -150.0
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
