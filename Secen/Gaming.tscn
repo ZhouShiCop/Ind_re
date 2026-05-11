@@ -1,24 +1,21 @@
 [gd_scene format=3 uid="uid://c3tk0vwyi7y2a"]
 
 [ext_resource type="TileSet" uid="uid://dnfg1b00hgb7a" path="res://Res/Source/Tile_set.tres" id="1_py34j"]
-[ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
-[ext_resource type="Script" uid="uid://cjmxdhabumvxq" path="res://Script/Component/tile_map_layer.gd" id="2_py34j"]
-[ext_resource type="Script" uid="uid://cm72ncl2bm8r7" path="res://Secen/visual_tile.gd" id="3_rpex6"]
+[ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/camera_free.gd" id="2_h18co"]
+[ext_resource type="Script" uid="uid://cjmxdhabumvxq" path="res://Script/Component/main_games.gd" id="2_py34j"]
+[ext_resource type="Script" uid="uid://cm72ncl2bm8r7" path="res://Script/Component/vf_tilemap.gd" id="3_rpex6"]
 [ext_resource type="Texture2D" uid="uid://clf7eex8vkruv" path="res://Texture/Tilemap/1.png" id="4_f5d8p"]
 [ext_resource type="StyleBox" uid="uid://d8vo61ocec8k" path="res://Res/Theme/new_style_box_flat.tres" id="4_ox3cs"]
 [ext_resource type="Texture2D" uid="uid://cigyhd4c56alv" path="res://Texture/Tilemap/Build.png" id="4_vtky6"]
-[ext_resource type="Texture2D" uid="uid://cw0i2um2f76yd" path="res://Texture/Tilemap/2.png" id="5_vtky6"]
 [ext_resource type="Texture2D" uid="uid://ckx0s4qpvn0ne" path="res://Texture/Tilemap/3.png" id="6_716w2"]
 [ext_resource type="LabelSettings" uid="uid://cog0qvmukx8v2" path="res://Res/Theme/label_font.tres" id="6_ox3cs"]
-[ext_resource type="Texture2D" uid="uid://voqvh2pgome4" path="res://Texture/Tilemap/4.png" id="7_rpex6"]
-[ext_resource type="Texture2D" uid="uid://bsckp4xcsjud4" path="res://Texture/Tilemap/5.png" id="8_a2vgu"]
-[ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/texture_button.gd" id="9_vtky6"]
+[ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/fouc_button.gd" id="9_vtky6"]
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
 [ext_resource type="Texture2D" uid="uid://ci1bopc2j1yoi" path="res://Texture/Tilemap/border2.png" id="13_a2vgu"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ox3cs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_716w2"]
 atlas = ExtResource("4_vtky6")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(0, 0, 64, 64)
 
 [node name="Root" type="Node2D" unique_id=1840476908]
 script = ExtResource("2_py34j")
@@ -73,6 +70,23 @@ label_settings = ExtResource("6_ox3cs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Arrow" type="Control" parent="vf" unique_id=994654392]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 62.0
+offset_bottom = 62.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="vf/Arrow" unique_id=1700375592]
+layout_mode = 0
+offset_left = -31.0
+offset_top = -31.0
+offset_right = 31.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("10_716w2")
+expand_mode = 1
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628964581]
 position = Vector2(960, 541)
 script = ExtResource("2_h18co")
@@ -84,8 +98,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -61.0
-offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -96,7 +108,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -88.0
+offset_top = -150.0
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
@@ -123,23 +136,15 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=159497699 groups=["Opreator"]]
-custom_minimum_size = Vector2(40, 40)
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=1151918381]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-mouse_behavior_recursive = 2
-mouse_default_cursor_shape = 3
-texture_normal = SubResource("AtlasTexture_ox3cs")
-texture_pressed = ExtResource("13_a2vgu")
-texture_hover = ExtResource("6_716w2")
-texture_disabled = ExtResource("7_rpex6")
-texture_focused = ExtResource("8_a2vgu")
-stretch_mode = 0
+icon = SubResource("AtlasTexture_716w2")
 script = ExtResource("9_vtky6")
-Name = "Build_Button"
+button_name = "Build_Mode"
 
-[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/TextureButton" unique_id=984976828]
+[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/Button" unique_id=984976828]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -160,23 +165,15 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=1763798051 groups=["Opreator"]]
-custom_minimum_size = Vector2(40, 40)
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=1126940515]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-mouse_behavior_recursive = 2
-mouse_default_cursor_shape = 3
-texture_normal = ExtResource("4_f5d8p")
-texture_pressed = ExtResource("5_vtky6")
-texture_hover = ExtResource("6_716w2")
-texture_disabled = ExtResource("7_rpex6")
-texture_focused = ExtResource("8_a2vgu")
-stretch_mode = 0
+icon = ExtResource("4_f5d8p")
 script = ExtResource("9_vtky6")
-Name = "Destroy"
+button_name = "Destroy_Mode"
 
-[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/TextureButton2" unique_id=1630994203]
+[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" unique_id=1412103589]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -184,5 +181,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_716w2")
+stretch_mode = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1691163465]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3" unique_id=907675058]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("6_716w2")
+script = ExtResource("9_vtky6")
+button_name = "Cancel_Mode"
+
+[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3/Button" unique_id=1397025672]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("10_716w2")
 stretch_mode = 3

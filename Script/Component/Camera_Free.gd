@@ -1,4 +1,5 @@
 extends Camera2D
+class_name camera_free
 ## 自由相机控制器
 ## 支持鼠标滚轮缩放和中键拖拽移动
 

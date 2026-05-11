@@ -4,7 +4,7 @@ extends Node
 
 #region 信号定义
 ## 工具栏按钮被按下 (button_name: 按钮标识, button_node: 按钮节点)
-signal toolbar_button_pressed(button_name: String, button_node: mode_button)
+signal toolbar_button_pressed(button_name: String, button_node: fouc_button)
 
 ## 操作模式变更 (mode_name: 模式名, is_active: 是否激活)
 signal mode_changed(mode_name: String, is_active: bool)
@@ -73,7 +73,7 @@ func disconnect_listener(listener: Object) -> void:
 
 #region 发射封装
 ## 发射工具栏按钮按下信号
-func emit_toolbar_button_pressed(button_name: String, button_node: mode_button) -> void:
+func emit_toolbar_button_pressed(button_name: String, button_node: fouc_button) -> void:
 	if debug_logging:
 		print("[SignalBus] emit toolbar_button_pressed(%s)" % button_name)
 	toolbar_button_pressed.emit(button_name, button_node)

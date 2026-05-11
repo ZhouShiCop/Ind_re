@@ -153,7 +153,7 @@ func _paint_tile(coord: Vector2i) -> void:
 	if tile_data != null and tile_data.get_custom_data("Is_Solid"):
 		return
 
-	print("绘制瓦片: ", coord)
+	#print("绘制瓦片: ", coord)
 	_tile_map_layer.set_cell(coord, DEFAULT_SOURCE_ID, DEFAULT_ATLAS_COORDS, 0)
 	_signal_bus.emit_tile_painted(coord, DEFAULT_SOURCE_ID, DEFAULT_ATLAS_COORDS)
 	_update_terrain_neighbors(coord)
@@ -165,7 +165,7 @@ func _erase_tile(coord: Vector2i) -> void:
 	if tile_data == null:
 		return
 
-	print("删除瓦片: ", coord)
+	#print("删除瓦片: ", coord)
 	_tile_map_layer.set_cell(coord, -1)
 	_signal_bus.emit_tile_erased(coord)
 	_tile_map_layer.set_cells_terrain_connect([coord], 0, -1, true)
@@ -211,7 +211,7 @@ func _get_line_points(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 
 #region 信号回调与模式切换
 ## [SignalBus.toolbar_button_pressed] 监听回调
-func _on_toolbar_button_pressed(button_name: String, _node: mode_button) -> void:
+func _on_toolbar_button_pressed(button_name: String, _node: fouc_button) -> void:
 	_switch_mode(button_name)
 
 
