@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ctok1taqdwj7o"]
 
-[ext_resource type="Script" uid="uid://djc56flvflaan" path="res://Script/Component/text_button.gd" id="1_8sosd"]
+[ext_resource type="Script" uid="uid://djc56flvflaan" path="res://Script/Component/mode_button.gd" id="1_8sosd"]
 [ext_resource type="PackedScene" uid="uid://c3tk0vwyi7y2a" path="res://Secen/Gaming.tscn" id="2_bogxd"]
 
 [sub_resource type="Gradient" id="Gradient_glv2v"]

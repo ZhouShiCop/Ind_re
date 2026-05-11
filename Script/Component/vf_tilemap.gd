@@ -7,6 +7,11 @@ class_name Vf_TileMap
 @onready var label: Label = $PanelContainer/VBoxContainer/Label
 @onready var label_2: Label = $PanelContainer/VBoxContainer/Label2
 @onready var camera_2d: Camera2D = $"../Camera2D"
+@onready var arrow: Control = $Arrow
+@onready var _signal_bus: Node = get_node("/root/SignalBus")
+
+# --- 内部状态 ---
+var _is_build_mode: bool = false
 
 # --- 导出变量 ---
 
@@ -45,6 +50,17 @@ func _ready() -> void:
 	if panel_container:
 		panel_container.visible = false
 		nine_patch_rect.visible = false
+	if arrow:
+		arrow.visible = true  ## 默认启用 arrow 可见性
+	_signal_bus.connect_safe("mode_changed", _on_mode_changed)
+
+
+## 模式变更回调 —— build_mode 时隐藏 arrow
+func _on_mode_changed(mode_name: String, is_active: bool) -> void:
+	if mode_name == "Build_Mode":
+		_is_build_mode = is_active
+		if arrow:
+			arrow.visible = not is_active
 
 # --- 核心逻辑 ---
 
@@ -120,4 +136,6 @@ func clear_draw() -> void:
 	# if nine_patch_rect: nine_patch_rect.visible = false
 
 func _process(_delta: float) -> void:
-	pass
+	if arrow and arrow.visible:
+		var mouse_tile := local_to_map(get_local_mouse_position())
+		arrow.position = map_to_local(mouse_tile)

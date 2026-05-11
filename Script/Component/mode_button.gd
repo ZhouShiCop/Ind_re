@@ -1,4 +1,5 @@
 extends TextureButton
+class_name mode_button
 ## 通用按钮控制器
 ## 处理按钮点击并触发对应场景切换
 
