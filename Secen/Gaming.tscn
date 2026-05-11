@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://clf7eex8vkruv" path="res://Texture/Tilemap/1.png" id="4_f5d8p"]
 [ext_resource type="StyleBox" uid="uid://d8vo61ocec8k" path="res://Res/Theme/new_style_box_flat.tres" id="4_ox3cs"]
 [ext_resource type="Texture2D" uid="uid://cigyhd4c56alv" path="res://Texture/Tilemap/Build.png" id="4_vtky6"]
+[ext_resource type="Texture2D" uid="uid://ckx0s4qpvn0ne" path="res://Texture/Tilemap/3.png" id="6_716w2"]
 [ext_resource type="LabelSettings" uid="uid://cog0qvmukx8v2" path="res://Res/Theme/label_font.tres" id="6_ox3cs"]
 [ext_resource type="Script" uid="uid://dmtgnn4jwa82a" path="res://Script/Component/fouc_button.gd" id="9_vtky6"]
 [ext_resource type="Texture2D" uid="uid://qmxje0jxu32a" path="res://Texture/Tilemap/border.png" id="10_716w2"]
@@ -74,6 +75,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 62.0
 offset_bottom = 62.0
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="vf/Arrow" unique_id=1700375592]
 layout_mode = 0
@@ -81,6 +83,7 @@ offset_left = -31.0
 offset_top = -31.0
 offset_right = 31.0
 offset_bottom = 31.0
+mouse_filter = 2
 texture = ExtResource("10_716w2")
 expand_mode = 1
 
@@ -183,6 +186,31 @@ size_flags_vertical = 4
 texture = ExtResource("10_716w2")
 stretch_mode = 3
 
-[connection signal="button_up" from="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" to="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" method="_on_button_down"]
-[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" to="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" method="_on_button_down"]
-[connection signal="toggled" from="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" to="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/Button" method="_on_button_down"]
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1691163465]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3" unique_id=907675058]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("6_716w2")
+script = ExtResource("9_vtky6")
+button_name = "Cancel_Mode"
+
+[node name="Border" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3/Button" unique_id=1397025672]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_716w2")
+stretch_mode = 3

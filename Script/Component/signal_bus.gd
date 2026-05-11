@@ -2,10 +2,7 @@ extends Node
 ## 全局信号总线 —— 集中定义、管理与追踪所有跨组件信号
 ## 已注册为 Autoload 单例，全局通过 SignalBus 访问
 
-# ============================================================
-# 信号定义
-# ============================================================
-
+#region 信号定义
 ## 工具栏按钮被按下 (button_name: 按钮标识, button_node: 按钮节点)
 signal toolbar_button_pressed(button_name: String, button_node: fouc_button)
 
@@ -20,20 +17,16 @@ signal tile_erased(coord: Vector2i)
 
 ## 场景切换请求 (scene_path: 目标场景路径)
 signal scene_change_requested(scene_path: String)
+#endregion
 
-# ============================================================
-# 连接追踪
-# ============================================================
-
+#region 属性
 ## 已注册连接记录: [信号名 -> { listener, method } ]
 var _connections: Dictionary = {}
 
 @export var debug_logging: bool = false ## 是否启用调试日志
+#endregion
 
-# ============================================================
-# 公共接口 —— 安全连接 / 断开
-# ============================================================
-
+#region 连接/断开
 ## 注册信号监听（自动追踪）
 func connect_safe(signal_name: StringName, callable: Callable, flags: int = 0) -> int:
 	if not has_signal(signal_name):
@@ -76,11 +69,9 @@ func disconnect_listener(listener: Object) -> void:
 
 	if debug_logging and removed_count > 0:
 		print("[SignalBus] 已清理 %d 个连接 (listener: %s)" % [removed_count, listener])
+#endregion
 
-# ============================================================
-# 发射封装（带日志）
-# ============================================================
-
+#region 发射封装
 ## 发射工具栏按钮按下信号
 func emit_toolbar_button_pressed(button_name: String, button_node: fouc_button) -> void:
 	if debug_logging:
@@ -114,11 +105,9 @@ func emit_scene_change_requested(scene_path: String) -> void:
 	if debug_logging:
 		print("[SignalBus] emit scene_change_requested(%s)" % scene_path)
 	scene_change_requested.emit(scene_path)
+#endregion
 
-
-# ============================================================
-
-
+#region 调试工具
 ## 打印当前所有已注册连接
 func print_all_connections() -> void:
 	print("=" .repeat(50))
@@ -136,11 +125,9 @@ func get_connection_count(signal_name: StringName) -> int:
 	if _connections.has(signal_name):
 		return _connections[signal_name].size()
 	return 0
+#endregion
 
-# ============================================================
-# 内部工具
-# ============================================================
-
+#region 内部工具
 func _track_connection(sig: StringName, callable: Callable) -> void:
 	if not _connections.has(sig):
 		_connections[sig] = []
@@ -168,3 +155,4 @@ static func _callable_path(c: Callable) -> String:
 
 func _exit_tree() -> void:
 	_connections.clear()
+#endregion

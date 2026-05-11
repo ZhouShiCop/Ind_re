@@ -101,7 +101,7 @@ texture_hover = SubResource("GradientTexture1D_r0du0")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_8sosd")
-gaming_scene = ExtResource("2_bogxd")
+game_scene = ExtResource("2_bogxd")
 
 [node name="Str_lb" type="Label" parent="Control/Start" unique_id=2140941913]
 layout_mode = 1
