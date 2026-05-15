@@ -11,6 +11,7 @@ class_name Vf_TileMap
 @onready var tile_count_label: Label = $PanelContainer/VBoxContainer/Label2
 @onready var camera_2d: Camera2D = $"../Camera2D"
 @onready var arrow: Control = $Arrow
+@onready var main_tilemap: TileMapLayer = $"../tiles"
 @onready var _signal_bus: Node = get_node("/root/SignalBus")
 #endregion
 
@@ -29,6 +30,8 @@ var _current_mode: Main_Games.Operator_Mode = Main_Games.Operator_Mode.Idle
 var _selection_visible: bool = false
 var _start_coord: Vector2i = Vector2i.ZERO
 var _end_coord: Vector2i = Vector2i.ZERO
+var _preview_coord: Vector2i = Vector2i.MIN
+var _preview_cells: Dictionary = {}
 #endregion
 
 #region 导出属性
@@ -86,7 +89,12 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if arrow and arrow.visible:
+	if _current_mode == Main_Games.Operator_Mode.Build_Mode:
+		if not _is_mouse_pressed:
+			_update_preview_tile()
+		else:
+			_clear_preview()
+	elif arrow and arrow.visible:
 		var mouse_tile := local_to_map(get_local_mouse_position())
 		arrow.position = map_to_local(mouse_tile)
 #endregion
@@ -104,18 +112,22 @@ func _refresh_ui(event: StringName) -> void:
 		Main_Games.Operator_Mode.Idle:
 			selection_visible = false
 			_apply_arrow(true)
+			_clear_preview()
 
 		Main_Games.Operator_Mode.Build_Mode:
 			selection_visible = false
-			_apply_arrow(event != &"press")
+			_apply_arrow(false)
+			_clear_preview()
 
 		Main_Games.Operator_Mode.Destroy_Mode:
 			selection_visible = (event == &"press")
 			_apply_arrow(event != &"press")
+			_clear_preview()
 
 		Main_Games.Operator_Mode.Cancel_Mode:
 			selection_visible = (event == &"press") or (event == &"release" and keep_selection_on_release)
 			_apply_arrow(false)
+			_clear_preview()
 
 ## 应用选框可见性 —— 唯一操作 selection_panel / selection_rect 的入口
 func _apply_selection() -> void:
@@ -192,4 +204,69 @@ func update_selection_ui():
 func clear_draw() -> void:
 	start_coord = Vector2i(0, 0)
 	end_coord = Vector2i(0, 0)
+#endregion
+
+#region 预览瓦片
+## 更新 Build 模式下的预览瓦片位置
+func _update_preview_tile() -> void:
+	if not main_tilemap or not tile_set:
+		return
+
+	var mouse_tile := local_to_map(get_local_mouse_position())
+	if mouse_tile == _preview_coord:
+		return
+
+	_clear_preview()
+	_preview_coord = mouse_tile
+	_place_preview_tile(mouse_tile)
+
+
+## 在指定坐标放置预览瓦片，并从主画布复制邻居以支持地形自动连接
+func _place_preview_tile(coord: Vector2i) -> void:
+	# 复制主画布周围瓦片到视觉层，为地形自动连接提供上下文
+	for dx in range(-1, 2):
+		for dy in range(-1, 2):
+			var check_coord := coord + Vector2i(dx, dy)
+			if check_coord == coord:
+				continue
+			var source_id := main_tilemap.get_cell_source_id(check_coord)
+			if source_id != -1:
+				set_cell(check_coord, source_id,
+					main_tilemap.get_cell_atlas_coords(check_coord),
+					main_tilemap.get_cell_alternative_tile(check_coord))
+				_preview_cells[check_coord] = true
+
+	# 放置预览瓦片
+	set_cell(coord, Main_Games.DEFAULT_SOURCE_ID, Main_Games.DEFAULT_ATLAS_COORDS, 0)
+	_preview_cells[coord] = true
+
+	# 应用地形自动连接更新
+	var cells_array: Array[Vector2i] = []
+	for cell in _preview_cells:
+		cells_array.append(cell)
+	set_cells_terrain_connect(cells_array, 0, 0, true)
+
+	# 更新邻居空位的地形连接（与 main_games 逻辑一致）
+	for direction in Main_Games.DIRECTIONS_4:
+		var neighbor := coord + direction
+		var neighbor_data := get_cell_tile_data(neighbor)
+		if neighbor_data == null or not neighbor_data.get_custom_data("Is_Solid"):
+			set_cells_terrain_connect([neighbor], 0, -1, true)
+
+
+## 清除所有预览瓦片
+func _clear_preview() -> void:
+	if _preview_cells.is_empty():
+		_preview_coord = Vector2i.MIN
+		return
+
+	for coord in _preview_cells:
+		set_cell(coord, -1)
+	_preview_cells.clear()
+	_preview_coord = Vector2i.MIN
+
+
+## 强制刷新预览（主画布瓦片变化后调用）
+func force_refresh_preview() -> void:
+	_preview_coord = Vector2i.MIN
 #endregion

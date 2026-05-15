@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3tk0vwyi7y2a"]
 
 [ext_resource type="TileSet" uid="uid://dnfg1b00hgb7a" path="res://Res/Source/Tile_set.tres" id="1_py34j"]
-[ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/camera_free.gd" id="2_h18co"]
+[ext_resource type="Script" uid="uid://ccwtr3ii0mjwx" path="res://Script/Component/Camera_Free.gd" id="2_h18co"]
 [ext_resource type="Script" uid="uid://cjmxdhabumvxq" path="res://Script/Component/main_games.gd" id="2_py34j"]
 [ext_resource type="Script" uid="uid://cm72ncl2bm8r7" path="res://Script/Component/vf_tilemap.gd" id="3_rpex6"]
 [ext_resource type="Texture2D" uid="uid://clf7eex8vkruv" path="res://Texture/Tilemap/1.png" id="4_f5d8p"]

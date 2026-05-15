@@ -15,7 +15,7 @@ enum Operator_Mode {
 
 #region 常量
 const DEFAULT_SOURCE_ID: int = 1
-const DEFAULT_ATLAS_COORDS: Vector2i = Vector2i(1, 0)
+const DEFAULT_ATLAS_COORDS: Vector2i = Vector2i(0, 0)
 
 const DIRECTIONS_4: Array[Vector2i] = [
 	Vector2i.RIGHT,
@@ -124,6 +124,7 @@ func _draw_tiles() -> void:
 	if prev_tile_pos == Vector2i.ZERO:
 		_process_tile(curr_tile_pos)
 		prev_tile_pos = curr_tile_pos
+		_overlay_layer.force_refresh_preview()
 		return
 
 	var path := _get_line_points(prev_tile_pos, curr_tile_pos)
@@ -131,6 +132,7 @@ func _draw_tiles() -> void:
 		_process_tile(tile_pos)
 
 	prev_tile_pos = curr_tile_pos
+	_overlay_layer.force_refresh_preview()
 
 
 ## Cancel_Mode 专用：仅更新选框范围，不绘制瓦片

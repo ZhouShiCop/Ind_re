@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ctok1taqdwj7o"]
 
-[ext_resource type="Script" uid="uid://dwa1m8r8sxgod" path="res://Script/Component/mode_button.gd" id="1_8sosd"]
+[ext_resource type="Script" uid="uid://djc56flvflaan" path="res://Script/Component/mode_button.gd" id="1_8sosd"]
 [ext_resource type="PackedScene" uid="uid://c3tk0vwyi7y2a" path="res://Secen/Gaming.tscn" id="2_bogxd"]
 
 [sub_resource type="Gradient" id="Gradient_glv2v"]
@@ -25,11 +25,25 @@ colors = PackedColorArray(0.4236506, 0.42365065, 0.42365053, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_r0du0"]
 gradient = SubResource("Gradient_uu6xs")
 
-[node name="Node2D" type="Node2D" unique_id=1489625241]
+[node name="Node2D" type="Control" unique_id=927849886]
+layout_mode = 3
+anchor_left = 0.0010729167
+anchor_right = 0.9999687
+anchor_bottom = 0.99428236
+offset_right = 2.06
+offset_bottom = 11.175
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="." unique_id=1669320161]
-layout_mode = 3
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1922.0
+offset_bottom = 1085.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=159756124]
 layout_mode = 0
