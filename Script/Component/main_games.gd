@@ -26,16 +26,13 @@ const DIRECTIONS_4: Array[Vector2i] = [
 #endregion
 
 #region 导出变量
-@export var build_mode: bool = false   ## 是否处于建造模式
-@export var destroy_mode: bool = false ## 是否处于删除模式
-@export var cancel_mode: bool = false   ## 是否处于选框模式（仅标尺，不绘制）
-@export var debug_state: Operator_Mode = Operator_Mode.Idle
+@export var curr_state: Operator_Mode = Operator_Mode.Idle
 #endregion
 
 #region 节点引用
 @onready var _tile_map_layer: TileMapLayer = $tiles
 @onready var _overlay_layer: Vf_TileMap = $vf
-@onready var _signal_bus: Node = get_node("/root/SignalBus")
+@onready var _signal_bus: SignalBus = get_node("/root/SignalBus")
 #endregion
 
 #region 内部状态
@@ -47,43 +44,26 @@ var curr_tile_pos: Vector2i       ## 当前瓦片坐标
 #region 生命周期
 func _ready() -> void:
 	_signal_bus.connect_safe(
-		"toolbar_button_pressed",
+		SignalBus.S_TOOLBAR_BUTTON_PRESSED,
 		_on_toolbar_button_pressed
 	)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _is_any_mode_active():
+	if curr_state == Operator_Mode.Idle:
 		return
 	if event is InputEventMouseButton:
 		_handle_mouse_button(event as InputEventMouseButton)
 
 
 func _process(_delta: float) -> void:
-	if not _is_any_mode_active():
+	if curr_state == Operator_Mode.Idle:
 		return
 	if is_drawing:
-		if cancel_mode:
+		if curr_state == Operator_Mode.Cancel_Mode:
 			_update_selection_only()
 		else:
 			_draw_tiles()
-#endregion
-
-#region 模式判断
-## 是否有任一操作模式处于激活状态
-func _is_any_mode_active() -> bool:
-	return build_mode or destroy_mode or cancel_mode
-
-
-## 获取当前激活的操作模式
-func _get_current_mode() -> Operator_Mode:
-	if build_mode:
-		return Operator_Mode.Build_Mode
-	if destroy_mode:
-		return Operator_Mode.Destroy_Mode
-	if cancel_mode:
-		return Operator_Mode.Cancel_Mode
-	return Operator_Mode.Idle
 #endregion
 
 #region 鼠标输入处理
@@ -141,7 +121,7 @@ func _update_selection_only() -> void:
 
 ## 处理单个瓦片：根据当前模式分发到绘制或删除
 func _process_tile(coord: Vector2i) -> void:
-	if destroy_mode:
+	if curr_state == Operator_Mode.Destroy_Mode:
 		_erase_tile(coord)
 	else:
 		_paint_tile(coord)
@@ -155,7 +135,7 @@ func _paint_tile(coord: Vector2i) -> void:
 
 	#print("绘制瓦片: ", coord)
 	_tile_map_layer.set_cell(coord, DEFAULT_SOURCE_ID, DEFAULT_ATLAS_COORDS, 0)
-	_signal_bus.emit_tile_painted(coord, DEFAULT_SOURCE_ID, DEFAULT_ATLAS_COORDS)
+	_signal_bus.emit(SignalBus.S_TILE_PAINTED, [coord, DEFAULT_SOURCE_ID, DEFAULT_ATLAS_COORDS])
 	_update_terrain_neighbors(coord)
 
 
@@ -167,7 +147,7 @@ func _erase_tile(coord: Vector2i) -> void:
 
 	#print("删除瓦片: ", coord)
 	_tile_map_layer.set_cell(coord, -1)
-	_signal_bus.emit_tile_erased(coord)
+	_signal_bus.emit(SignalBus.S_TILE_ERASED, [coord])
 	_tile_map_layer.set_cells_terrain_connect([coord], 0, -1, true)
 	_update_terrain_neighbors(coord)
 #endregion
@@ -217,37 +197,32 @@ func _on_toolbar_button_pressed(button_name: String, _node: fouc_button) -> void
 
 ## 切换操作模式
 func _switch_mode(button_name: String) -> void:
+	var target_mode: Operator_Mode
 	match button_name:
 		"Build_Mode":
-			build_mode = not build_mode
-			if build_mode:
-				destroy_mode = false
-				cancel_mode = false
-			_signal_bus.emit_mode_changed("Build_Mode", build_mode)
+			target_mode = Operator_Mode.Build_Mode
 		"Destroy_Mode":
-			destroy_mode = not destroy_mode
-			if destroy_mode:
-				build_mode = false
-				cancel_mode = false
-			_signal_bus.emit_mode_changed("Destroy_Mode", destroy_mode)
+			target_mode = Operator_Mode.Destroy_Mode
 		"Cancel_Mode":
-			cancel_mode = not cancel_mode
-			if cancel_mode:
-				build_mode = false
-				destroy_mode = false
-			_signal_bus.emit_mode_changed("Cancel_Mode", cancel_mode)
+			target_mode = Operator_Mode.Cancel_Mode
 		_:
 			push_warning("未知的按钮名称: %s" % button_name)
 			return
 
-	debug_state = _get_current_mode()
+	# 如果已经是目标模式，切换回 Idle；否则激活目标模式
+	if curr_state == target_mode:
+		curr_state = Operator_Mode.Idle
+	else:
+		curr_state = target_mode
+
+	_signal_bus.emit(SignalBus.S_MODE_CHANGED, [curr_state])
 	_print_current_mode()
 
 
 ## 打印当前操作模式到控制台
 func _print_current_mode() -> void:
 	var mode_name := ""
-	match _get_current_mode():
+	match curr_state:
 		Operator_Mode.Build_Mode:
 			mode_name = "建造模式"
 		Operator_Mode.Destroy_Mode:

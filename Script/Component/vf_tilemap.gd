@@ -11,17 +11,7 @@ class_name Vf_TileMap
 @onready var tile_count_label: Label = $PanelContainer/VBoxContainer/Label2
 @onready var camera_2d: Camera2D = $"../Camera2D"
 @onready var arrow: Control = $Arrow
-@onready var _signal_bus: Node = get_node("/root/SignalBus")
-#endregion
-
-#region 常量与映射
-## 信号字符串 → 枚举映射
-const MODE_NAME_TO_ENUM: Dictionary = {
-	"Build_Mode":   Main_Games.Operator_Mode.Build_Mode,
-	"Destroy_Mode": Main_Games.Operator_Mode.Destroy_Mode,
-	"Cancel_Mode":  Main_Games.Operator_Mode.Cancel_Mode,
-	"Dig_Mode":     Main_Games.Operator_Mode.Dig_Mode,
-}
+@onready var _signal_bus: SignalBus = get_node("/root/SignalBus")
 #endregion
 
 #region 内部状态
@@ -82,7 +72,7 @@ func _ready() -> void:
 		selection_rect.visible = false
 	if arrow:
 		arrow.visible = true  ## 默认启用 arrow 可见性
-	_signal_bus.connect_safe("mode_changed", _on_mode_changed)
+	_signal_bus.connect_safe(SignalBus.S_MODE_CHANGED, _on_mode_changed)
 
 
 func _process(_delta: float) -> void:
@@ -93,8 +83,8 @@ func _process(_delta: float) -> void:
 
 #region 状态机控制
 ## 模式变更回调 —— 仅更新状态，委托 _refresh_ui 刷新 UI
-func _on_mode_changed(mode_name: String, is_active: bool) -> void:
-	_current_mode = MODE_NAME_TO_ENUM.get(mode_name, Main_Games.Operator_Mode.Idle) if is_active else Main_Games.Operator_Mode.Idle
+func _on_mode_changed(mode: Main_Games.Operator_Mode) -> void:
+	_current_mode = mode
 	_refresh_ui(&"enter")
 
 ## 统一 UI 刷新 —— 唯一修改 selection_visible / arrow 的入口

@@ -1,5 +1,5 @@
 extends Camera2D
-class_name camera_free
+class_name _camera_free
 ## 自由相机控制器
 ## 支持鼠标滚轮缩放和中键拖拽移动
 
@@ -14,7 +14,7 @@ const DEFAULT_ZOOM := Vector2(1.0, 1.0)
 @export var zoom_factor := 1.3      ## 缩放倍率（1.1 = 每次放大10%）
 @export var min_zoom := 0.2         ## 最小缩放值
 @export var max_zoom := 6.0         ## 最大缩放值
-@export var lerp_weight := 16      ## 插值速度（越小越慢）
+@export var lerp_weight := 16       ## 插值速度（越小越慢）
 
 # ============================================================
 # 成员变量
